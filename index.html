@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#b51224">
+<title>Rire & Chansons — Radio en direct</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(145deg,#25070b,#090d18);color:white;font-family:Arial,sans-serif;display:flex;justify-content:center;align-items:center;padding:20px}
+.player{width:100%;max-width:600px;border:2px solid #f3c64e;border-radius:28px;overflow:hidden;background:#101626;text-align:center;box-shadow:0 15px 50px #0008}
+header{padding:38px 20px 30px;background:linear-gradient(135deg,#a80d20,#ed2435);border-bottom:4px solid #f3c64e}
+.logo{width:110px;height:110px;margin:auto auto 20px;border-radius:50%;background:#fff;color:#c20e25;border:5px solid #f3c64e;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;line-height:1.05}
+h1{font-size:clamp(30px,8vw,46px);margin:8px 0;font-weight:900}
+h2{font-size:16px;letter-spacing:2px;color:#ffe28a;margin:14px 0}
+header p{font-style:italic;font-size:17px;line-height:1.5}
+main{padding:30px 20px 36px}
+.live{display:inline-block;border:1px solid #f3c64e;color:#ffe28a;border-radius:30px;padding:12px 24px;font-weight:bold;letter-spacing:3px}
+.play{margin:35px auto 22px;width:150px;height:150px;border-radius:50%;border:7px solid #f3c64e;background:linear-gradient(145deg,#e9273a,#a60c20);color:white;font-size:55px;cursor:pointer;box-shadow:0 8px 22px #0008}
+#status{font-size:18px;line-height:1.5;color:#e3e6ee;min-height:28px}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:28px 0}
+.tags span{border:1px solid #586078;border-radius:24px;padding:12px;font-weight:bold;font-size:13px}
+.info{font-size:17px;line-height:1.7;color:#d3d9e7;margin:25px 0}
+a{display:inline-block;border:2px solid #f3c64e;border-radius:30px;padding:14px 20px;color:white;text-decoration:none;font-weight:bold}
+small{display:block;color:#9fa9be;margin-top:22px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="player">
+<header>
+<div class="logo">RIRE<br>&amp;<br>CHANSONS</div>
+<h1>RIRE &amp; CHANSONS</h1>
+<h2>LA RADIO DU RIRE !</h2>
+<p>La radio qui vous donne le sourire !</p>
+</header>
+<main>
+<div class="live">🔴 EN DIRECT</div>
+<button class="play" id="play" aria-label="Écouter la radio">▶</button>
+<div id="status">Appuyez pour écouter Rire &amp; Chansons</div>
+<audio id="audio" preload="none"></audio>
+<div class="tags">
+<span>😂 HUMOUR</span>
+<span>🎙️ SKETCHS</span>
+<span>🎵 CHANSONS</span>
+<span>❤️ BONNE HUMEUR</span>
+</div>
+<p class="info">Retrouvez les humoristes, les sketchs et les chansons pour passer un bon moment, sur votre téléphone, tablette ou ordinateur.</p>
+<a href="https://www.rireetchansons.fr/" target="_blank" rel="noopener">🌐 Site officiel de Rire &amp; Chansons</a>
+<small>Rire &amp; Chansons · Humour et musique<br>La bonne humeur à partager !</small>
+</main>
+</div>
+<script>
+const audio=document.getElementById('audio');
+const play=document.getElementById('play');
+const status=document.getElementById('status');
+const stream='https://streaming.nrjaudio.fm/oug7girb92oc?origine=fluxradios';
+play.addEventListener('click',async()=>{
+ if(!audio.paused){audio.pause();play.textContent='▶';status.textContent='Radio en pause';return}
+ status.textContent='Connexion à la radio…';
+ audio.src=stream;
+ try{await audio.play();play.textContent='Ⅱ';status.textContent='Rire & Chansons est en lecture'}
+ catch(e){status.textContent='Lecture impossible. Réessayez ou ouvrez le site officiel.';play.textContent='▶'}
+});
+audio.addEventListener('error',()=>{status.textContent='Le flux audio ne répond pas. Réessayez plus tard.';play.textContent='▶'});
+</script>
+</body>
+</html>
